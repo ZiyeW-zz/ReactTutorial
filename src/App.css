@@ -40,3 +40,12 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+.ListCourses {
+  width: auto;
+  margin-left: 50px;
+  margin-right: 50px;
+  font-family: "Josefin Sans", sans-serif;
+  border: 3px solid #000000;
+  padding: 20px;
+}
