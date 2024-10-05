@@ -1,0 +1,13 @@
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 14rem);
+    width:auto;
+  }
+
+  /* .cards{
+    height:100%;
+    width:100%;
+    border: 3px solid #000000;
+    border-radius: 20px;
+  } */
+  

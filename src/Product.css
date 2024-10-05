@@ -1,0 +1,35 @@
+/* https://stackoverflow.com/a/47698201/4564359 */
+.product .card-img-top {
+    width: auto;
+    height: 15vw;
+    object-fit: cover;
+  }
+  
+
+  .card {
+    /* border: 2px solid #000005;  */
+    border-radius: 15px; 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5); 
+    padding: 20px; 
+    margin: 15px; 
+  }
+
+  /* .card-body {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr; 
+    gap: 10px; 
+  }
+   */
+  /* .header{
+    grid-row:1;
+  }
+  .title{
+    grid-row:2;
+  }
+  .meeting{
+    grid-row:3;
+  } */
+  /* .spacer {
+    flex-grow: 1; 
+    height: 20px; 
+  } */

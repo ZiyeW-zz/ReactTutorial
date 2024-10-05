@@ -49,3 +49,11 @@ button {
   border: 3px solid #000000;
   padding: 20px;
 }
+
+.cards{
+  height:100%;
+  width:auto;
+  margin-left: 50px;
+  margin-right: 50px;
+
+}

@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Banner from './components/Banner';
 import CourseList from './components/CourseList';
+import ProductList from './ProductList';
 
 
 const schedule = {
@@ -38,15 +39,21 @@ const schedule = {
 
 const App = () => {
   const [count, setCount] = useState(0);
-  // const [Banner, CourseList] = useState(0);
 
   return (
-    <div className="ListCourses">
-      <Banner title={schedule.title}/>
-      <CourseList courses={schedule.courses}/>`
-    </div>
+    <div>
+      <div className="ListCourses">
+        <Banner title={schedule.title} />
+        <CourseList courses={schedule.courses} />
+        {/* Convert courses object to an array and pass to ProductList */}
+      </div>
 
+      <div className="cards">
+        <ProductList className="cards" products={Object.values(schedule.courses)} />
+      </div>
+    </div>
   );
 };
+
 
 export default App;
