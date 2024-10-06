@@ -48,8 +48,8 @@ const App = () => {
         {/* Convert courses object to an array and pass to ProductList */}
       </div>
 
-      <div className="cards">
-        <ProductList className="cards" products={Object.values(schedule.courses)} />
+      <div className="">
+        <ProductList products={Object.values(schedule.courses)} />
       </div>
     </div>
   );

@@ -2,9 +2,9 @@ import Product from './Product';
 import './Products.css'
 
 const ProductList = ({products}) => (
-  <div className="product-list">
+  <div className="row-container">
     {
-      products.map(product => <Product className="cards" key={product.title} product={product} />)
+      products.map(product => <Product className="row-item" key={product.title} product={product} />)
     }
   </div>
 );

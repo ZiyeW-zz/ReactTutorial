@@ -1,7 +1,8 @@
 .product-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, 14rem);
-    width:auto;
+    /* width:100%; */
+    gap: 20px;
   }
 
   /* .cards{
@@ -10,4 +11,21 @@
     border: 3px solid #000000;
     border-radius: 20px;
   } */
+  
+  .row-container {
+    display: grid; /* Enables flexbox layout */
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    justify-content: space-between; /* Ensures the items are spaced evenly */
+    width: 100%; /* Make sure the container fills the available width */
+    flex-wrap: nowrap; /* Prevents items from wrapping to the next row */
+  }
+  
+  .row-item {
+    flex-basis: 24%; /* Each item takes 24% of the width, leaving space for gaps */
+    margin: 0 5px; /* Adjusts space between items */
+    background-color: lightgray;
+    padding: 10px;
+    text-align: center;
+  }
   
