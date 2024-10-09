@@ -1,0 +1,9 @@
+.chooserComponent {
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.chooserButtons {
+    border-radius: 15px;
+    margin-right: 5px;
+}
