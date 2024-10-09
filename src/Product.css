@@ -16,6 +16,15 @@
     /* width: 100%; */
   }
 
+  .card.selected {
+    background-color: lightgreen;
+  }
+  .checkmark {
+    font-size: 18px;
+    color: green;
+    margin-left: 10px;
+  }
+
   .card-body {
     display: flex;
     flex-direction: column;

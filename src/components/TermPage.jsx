@@ -1,6 +1,6 @@
 // TermPage
 import { useState } from 'react';
-import Chooser from './Chooser'; // Import your TermSelector component
+import Chooser from './Chooser'; 
 import CourseList from './CourseList'; // Assume you have a CourseList component
 
 const TermPage = () => {

@@ -1,10 +1,22 @@
 import Product from './Product';
-import './Products.css'
+import './Products.css';
 
-const ProductList = ({products}) => (
+const ProductList = ({ products, selectedCourses, onCourseClick }) => (
   <div className="row-container">
     {
-      products.map(product => <Product className="row-item" key={product.title} product={product} />)
+      products.map(product => {
+        const isSelected = selectedCourses.some(selected => selected.courseNumber === product.number && selected.term === product.term);
+        
+        return (
+          <Product
+            className="row-item"
+            key={`${product.number}-${product.term}`} // use both number and term as key
+            product={product}
+            isSelected={isSelected}//pass if the course is selected
+            onCourseClick={onCourseClick} //pass the click handler
+          />
+        );
+      })
     }
   </div>
 );
