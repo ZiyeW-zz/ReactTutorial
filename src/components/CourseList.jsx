@@ -4,6 +4,7 @@ import React from 'react';
 const CourseList = ({ courses }) => {
   return (
     <div>
+      <h2> Course Plan </h2>
       {Object.keys(courses).map((courseKey) => {
         // const course = courses[courseKey];  // Get each course object from the key
         // return (

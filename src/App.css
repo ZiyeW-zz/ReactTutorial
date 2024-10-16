@@ -64,3 +64,23 @@ button {
   background-color: lightgray;
   padding: 10px;
 }
+
+.headerSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.chooserSection {
+  flex: 1; /* Ensures it takes up available space */
+}
+
+.selectedSection {
+  display: flex;
+  justify-content: flex-end;
+  /* margin: 10px; */
+  min-width: 300px;
+}
