@@ -3,6 +3,7 @@ import './components.css';
 
 const SelectedCourseList = ({ selected }) => (
   <div className="selectedCourses">
+    <h2> Course Plan </h2>
     {selected.length === 0 ? (
       <h2>No courses selected. Click on a course card to add to your plan.</h2>
     ) : (

@@ -12,6 +12,9 @@ import SelectedCourseList from './components/SelectedCourseList';
 // task 6
 const queryClient = new QueryClient();
 
+//task10
+import { hasTimeConflict } from './utilities/Time';
+
 
 
 const App = () => {
@@ -33,18 +36,19 @@ const App = () => {
   const filteredCourses = Object.values(coursesData.courses).filter(course => course.term === selectedTerm);
 
 
-  // const toggleCourseSelection = (courseNumber, term) => {
-  //   const courseKey = {courseNumber, term};
-  //   setSelectedCourses(prevSelected => {
-  //     const isSelected = prevSelected.some(selected => selected.courseNumber === courseNumber && selected.term == term);
-
-  //     return isSelected
-  //       ? prevSelected.filter(selected => !(selected.courseNumber === courseNumber && selected.term == term))
-  //       : [...prevSelected, courseKey];
-  //   });
-  // };
   const toggleCourseSelection = (courseNumber, term, title, meets) => {
-    const courseKey = { courseNumber, term, title, meets }; // Include title and meets
+    const courseKey = { courseNumber, term, title, meets };
+    
+    // Check if the course can be selected (no conflicts)
+    const canSelect = !selectedCourses.some(selected =>
+      selected.term === term && hasTimeConflict(selected.meets, meets)
+    );
+    
+    if (!canSelect) {
+      // Optionally show an alert or notification about the conflict
+      return;
+    }
+  
     setSelectedCourses((prevSelected) => {
       const isSelected = prevSelected.some(
         (selected) =>
