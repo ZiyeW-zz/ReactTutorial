@@ -1,4 +1,8 @@
+//Product.jsx
 import './Product.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Link } from 'react-router-dom';
+
 
 
 const Product = ({ product, isSelected, onCourseClick, isSelectable }) => (
@@ -12,7 +16,12 @@ const Product = ({ product, isSelected, onCourseClick, isSelectable }) => (
       <div className="separator"></div>
       <p className="meeting card-text">{product.meets}</p>
       {isSelected && <span className="checkmark">✓</span>}
-      {/* {!isSelectable && <span className="conflict-icon">×</span>} Show a conflict icon */}
+
+      <Link to={`/edit-course/${product.number}`} className="btn btn-outline-primary">
+        Edit
+      </Link>
+
+
     </div>
   </div>
 );

@@ -1,0 +1,32 @@
+/* CourseForm.css */
+
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.inputfield{
+    padding: 10px;
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.cancel {
+    padding: 10px;
+    padding-top: 20px;
+}
+
+.inputTitle{
+    margin-bottom: 5px;
+}
+.inputType {
+    width: 90%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 5px;
+    padding:5px;
+}

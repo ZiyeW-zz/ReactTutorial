@@ -1,3 +1,4 @@
+//ProductList.jsx
 import Product from './Product';
 import './Products.css';
 
@@ -16,6 +17,8 @@ const ProductList = ({ products, selectedCourses, onCourseClick }) => (
           selected => selected.courseNumber === product.number && selected.term === product.term
         );
 
+        const isSelectable = !hasConflict || isSelected;
+
         return (
           <Product
             className={`row-item ${hasConflict ? 'conflict' : ''}`} // Add a class for conflicting items
@@ -23,7 +26,7 @@ const ProductList = ({ products, selectedCourses, onCourseClick }) => (
             product={product}
             isSelected={isSelected}
             onCourseClick={() => onCourseClick(product.number, product.term, product.title, product.meets)}
-            isSelectable={!hasConflict} // Pass if it can be selected
+            isSelectable={isSelectable} // Pass if it can be selected
           />
         );
       })

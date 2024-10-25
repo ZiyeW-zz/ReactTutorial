@@ -4,6 +4,7 @@ import './App.css';
 import ProductList from './ProductList';
 import { useJsonQuery } from './utilities/fetch'; // custom hook
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 //task 7
 import Chooser from './components/Chooser';
@@ -14,6 +15,9 @@ const queryClient = new QueryClient();
 
 //task10
 import { hasTimeConflict } from './utilities/Time';
+
+//task 11
+import CourseForm from './pages/CourseForm';
 
 
 
@@ -39,75 +43,75 @@ const App = () => {
   const toggleCourseSelection = (courseNumber, term, title, meets) => {
     const courseKey = { courseNumber, term, title, meets };
     
-    // Check if the course can be selected (no conflicts)
-    const canSelect = !selectedCourses.some(selected =>
-      selected.term === term && hasTimeConflict(selected.meets, meets)
-    );
-    
-    if (!canSelect) {
-      // Optionally show an alert or notification about the conflict
-      return;
-    }
-  
     setSelectedCourses((prevSelected) => {
       const isSelected = prevSelected.some(
         (selected) =>
           selected.courseNumber === courseNumber && selected.term === term && selected.title === title && selected.meets === meets
       );
-  
-      return isSelected
-        ? prevSelected.filter(
-            (selected) =>
-              !(selected.courseNumber === courseNumber && selected.term === term && selected.title === title && selected.meets === meets)
-          )
-        : [...prevSelected, courseKey];
+
+      //if course already selected, allow unselecting it
+      if (isSelected) {
+        return prevSelected.filter(
+          (selected) =>
+            !(selected.courseNumber === courseNumber && selected.term === term && selected.title === title && selected.meets === meets)
+        );
+      }
+
+      //If the course is not selected, check if it can be selected (no conflicts)
+      const canSelect = !prevSelected.some(selected =>
+        selected.term === term && hasTimeConflict(selected.meets, meets)
+      );
+
+      // If there's a conflict, do not add the course
+      if (!canSelect) {
+        // Optionally show an alert or notification about the conflict
+        return prevSelected;
+      }
+
+      // Add the course if it does not have a conflict
+      return [...prevSelected, courseKey];
     });
-  };
+};
+
   
   
 
-  const handleModalToggle = () => {
-    setModalOpen(!isModalOpen);
-    setModalClosed(!isModalClosed);
-  };
 
-  return (
-    <div>
-      <div className="headerSection">
-        <Chooser className="chooserSection" onTermChange={setSelectedTerm}/>
 
-        <div className="selectedSection">
-          {/* <button className="btn btn-outline-dark" onClick={openModal}>
-              <i className="bi bi-cart4"></i> Course Plan
-            </button> */}
+return (
+  <div>
+    <div className="headerSection">
+      <Chooser className="chooserSection" onTermChange={setSelectedTerm} />
+      <div className="selectedSection">
         <button className="btn btn-outline-dark" onClick={openModal}>
-            <i className="bi bi-cart4"></i> Course Plan
-          </button>
-          <Modal open={open} close={closeModal}>
-            <SelectedCourseList selected={selectedCourses} />
-          </Modal>
-        </div>
-        
-        {/* <button onClick={handleModalToggle}> Open Modal Here </button> */}
+          <i className="bi bi-cart4"></i> Course Plan
+        </button>
+        <Modal open={open} close={closeModal}>
+          <SelectedCourseList selected={selectedCourses} />
+        </Modal>
       </div>
+    </div>
 
-      <div className="">
-       <ProductList 
+    <Routes>
+      <Route path="/" element={
+        <ProductList 
           products={filteredCourses} 
           selectedCourses={selectedCourses} 
           onCourseClick={toggleCourseSelection} 
-        />      
-      </div>
-
-
-    </div>
-  );
+        />
+      } />
+      <Route path="/edit-course/:courseId" element={<CourseForm courses={coursesData.courses} />} />
+    </Routes>
+  </div>
+);
 };
 
 const Root = () => (
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </QueryClientProvider>
   </React.StrictMode>
 );
