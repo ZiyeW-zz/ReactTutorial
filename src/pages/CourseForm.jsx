@@ -10,7 +10,10 @@ const validateCourseData = (key, val) => {
     case 'title':
       return val.length >= 2 ? '' : 'Title must be at least two characters';
     case 'meets':
-      return /^[\w\s]+$/.test(val) ? '' : 'Meeting time is invalid';
+      // Allow empty string or format like "MWF 12:00-13:20"
+      return val === '' || /^[MTWRF]+ \d{1,2}:\d{2}-\d{1,2}:\d{2}$/.test(val)
+        ? ''
+        : 'Must contain days and start-end time, e.g., MWF 12:00-13:20';
     default: 
       return '';
   }
@@ -26,7 +29,10 @@ const InputField = ({name, text, state, change}) => (
       defaultValue={state.values?.[name]}
       onChange={change}
     />
-    <div className="invalid-feedback">{state.errors?.[name]}</div>
+    
+  {state.errors?.[name] && <div className="invalid-feedback">{state.errors[name]}</div>}
+
+    {/* <div className="invalid-feedback">{state.errors?.[name]}</div> */}
   </div>
 );
 
