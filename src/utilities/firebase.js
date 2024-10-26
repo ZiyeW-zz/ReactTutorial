@@ -51,13 +51,20 @@ const makeResult = (error) => {
   return { timestamp, error, message };
 };
 
-export const useDbUpdate = (path) => {
-  const [result, setResult] = useState();
-  const updateData = useCallback((value) => {
-    update(ref(database, path), value)
-    .then(() => setResult(makeResult()))
-    .catch((error) => setResult(makeResult(error)))
-  }, [database, path]);
 
-  return [updateData, result];
-};
+export const useDbUpdate = (path) => {
+    const [result, setResult] = useState(null);
+    const database = getDatabase();
+  
+    const updateData = useCallback(async (value) => {
+      try {
+        await update(ref(database, path), value);
+        setResult({ success: true });
+      } catch (error) {
+        setResult({ error });
+        console.error("Error updating data:", error);
+      }
+    }, [database, path]);
+  
+    return [updateData, result];
+  };

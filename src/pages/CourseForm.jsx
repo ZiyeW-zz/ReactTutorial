@@ -1,9 +1,11 @@
 //CourseForm.jsx
 
-import { useFormData } from '../utilities/useFormData';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import { useDbUpdate } from '../utilities/firebase';
+import { useFormData } from '../utilities/useFormData';
 import "./CourseForm.css"
+
+
 // Custom validation for course form
 const validateCourseData = (key, val) => {
   switch (key) {
@@ -36,35 +38,60 @@ const InputField = ({name, text, state, change}) => (
   </div>
 );
 
-const ButtonBar = () => {
+const ButtonBar = ({ onSubmit }) => {
   const navigate = useNavigate();
   return (
     <div className="d-flex cancel">
       <button type="button" className="btn btn-outline-dark me-2" onClick={() => navigate(-1)}>Cancel</button>
+      <button type="button" className="btn btn-primary" onClick={onSubmit}>Submit</button>
+
     </div>
   );
 };
 
 
 const CourseForm = ({ courses }) => {
+
   const { courseId } = useParams();  // Get courseId from the URL
   const navigate = useNavigate();
+  const [updateData] = useDbUpdate(`/courses/${courseId}`);
+
+  
+
   
   // Convert `courses` to an array and find the course by its ID
-  const courseArray = Object.values(courses);
-  const course = courseArray.find(c => c.number === courseId) || { title: '', meets: '' };
+  const courseArray = Object.values(courses || {});
+  const course = courseArray.find(c => `${c.term[0]}${c.number}` === courseId) || { title: '', meets: '' };
   
+
   const [state, change] = useFormData(validateCourseData, course);
 
-  const submit = (evt) => {
-    evt.preventDefault();
+  const hasChanges = () => {
+    return Object.keys(state.values).some(key => state.values[key] !== course[key]);
   };
+
+  const submit = async (evt) => {
+    evt.preventDefault();
+    // Ensure no errors and check for changes
+    const hasErrors = Object.values(state.errors).some(error => error);
+    if (!hasErrors && hasChanges()) {
+      try {
+        await updateData(state.values);
+        navigate(-1); // Redirect back after successful update
+      } catch (error) {
+        console.error("Error updating course data:", error);
+      }
+    } else {
+      console.log("No changes or there are form errors");
+    }
+  };
+  
 
   return (
     <form onSubmit={submit} noValidate className={state.errors ? 'was-validated' : null}>
       <InputField name="title" text="Course Title" state={state} change={change} />
       <InputField name="meets" text="Meeting Time" state={state} change={change} />
-      <ButtonBar />
+      <ButtonBar onSubmit={submit} />
     </form>
   );
 };

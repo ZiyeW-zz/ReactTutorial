@@ -17,7 +17,7 @@ const Product = ({ product, isSelected, onCourseClick, isSelectable }) => (
       <p className="meeting card-text">{product.meets}</p>
       {isSelected && <span className="checkmark">✓</span>}
 
-      <Link to={`/edit-course/${product.number}`} className="btn btn-outline-primary">
+      <Link to={`/edit-course/${product.term[0]}${product.number}`} className="btn btn-outline-primary">
         Edit
       </Link>
 
