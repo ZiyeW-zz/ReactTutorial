@@ -20,21 +20,35 @@ import { hasTimeConflict } from './utilities/Time';
 import CourseForm from './pages/CourseForm';
 //task 13
 import { useDbData, useDbUpdate } from './utilities/firebase';
+//task 15
+import Navigation from './components/Navigation'; // Import your Navigation component
+import { useAuthState } from './utilities/firebase';
 
 
 
 const App = () => {
+
+  //Hooks
+  const [user] = useAuthState();
   const [coursesData, isLoading, error] = useDbData('/');
   // const [coursesData, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
-
   const [selectedTerm, setSelectedTerm] = useState('Fall'); // Default to 'Fall'
-
   //task 8
   const [selectedCourses, setSelectedCourses] = useState([]);
   //task 9
   const [open, setOpen] = useState(false);
+
+  //event handlers
   const openModal = () => setOpen(true);
   const closeModal = () => setOpen(false);
+
+  if (!user) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100 initPage">
+        <Navigation /> {/* Only the sign-in button will show */}
+      </div>
+    );
+  }
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading courses: {error.message}</div>;
@@ -78,9 +92,6 @@ const App = () => {
 };
 
   
-  
-
-
 
 return (
   <div>
@@ -90,6 +101,9 @@ return (
         <button className="btn btn-outline-dark" onClick={openModal}>
           <i className="bi bi-cart4"></i> Course Plan
         </button>
+        <div>
+          <Navigation />
+        </div>
         <Modal open={open} close={closeModal}>
           <SelectedCourseList selected={selectedCourses} />
         </Modal>

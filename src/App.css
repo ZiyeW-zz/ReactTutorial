@@ -84,3 +84,10 @@ button {
   /* margin: 10px; */
   min-width: 300px;
 }
+
+.initPage {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
