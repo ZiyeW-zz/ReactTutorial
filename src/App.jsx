@@ -18,11 +18,14 @@ import { hasTimeConflict } from './utilities/Time';
 
 //task 11
 import CourseForm from './pages/CourseForm';
+//task 13
+import { useDbData, useDbUpdate } from './utilities/firebase';
 
 
 
 const App = () => {
-  const [coursesData, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
+  const [coursesData, isLoading, error] = useDbData('/');
+  // const [coursesData, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
 
   const [selectedTerm, setSelectedTerm] = useState('Fall'); // Default to 'Fall'
 
@@ -37,8 +40,9 @@ const App = () => {
   if (error) return <div>Error loading courses: {error.message}</div>;
 
   // task 7
-  const filteredCourses = Object.values(coursesData.courses).filter(course => course.term === selectedTerm);
-
+  const filteredCourses = coursesData?.courses
+    ? Object.values(coursesData.courses).filter(course => course.term === selectedTerm)
+    : [];
 
   const toggleCourseSelection = (courseNumber, term, title, meets) => {
     const courseKey = { courseNumber, term, title, meets };
